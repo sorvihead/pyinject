@@ -1,0 +1,36 @@
+"""Type-only graph declarations. Runtime execution is deferred to U9-U11."""
+
+from collections.abc import Callable
+from typing import ParamSpec, overload
+
+_P = ParamSpec("_P")
+
+class Ref[T]:
+    """Symbolic runtime reference; provider.ref exposes T to the checker."""
+
+class BoundProvider[T]:
+    def __call__(self) -> T: ...
+    @property
+    def ref(self) -> T: ...
+
+class Provider[T]:
+    @property
+    def ref(self) -> T: ...
+    @overload
+    def __get__(self, instance: None, owner: type[object]) -> Provider[T]: ...
+    @overload
+    def __get__(self, instance: object, owner: type[object] | None = None) -> BoundProvider[T]: ...
+
+class Factory[T](Provider[T]):
+    def __init__(self, factory: Callable[_P, T], /, *args: _P.args, **__pyinject_kwargs: _P.kwargs) -> None: ...
+    @overload
+    def __get__(self, instance: None, owner: type[object]) -> Factory[T]: ...
+    @overload
+    def __get__(self, instance: object, owner: type[object] | None = None) -> BoundProvider[T]: ...
+
+class Singleton[T](Provider[T]):
+    def __init__(self, factory: Callable[_P, T], /, *args: _P.args, **__pyinject_kwargs: _P.kwargs) -> None: ...
+    @overload
+    def __get__(self, instance: None, owner: type[object]) -> Singleton[T]: ...
+    @overload
+    def __get__(self, instance: object, owner: type[object] | None = None) -> BoundProvider[T]: ...

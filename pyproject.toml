@@ -79,6 +79,8 @@ warn_unreachable = true
 [tool.pyright]
 pythonVersion = "3.15"
 typeCheckingMode = "strict"
+# This phase intentionally ships .pyi declarations without runtime modules.
+reportMissingModuleSource = "none"
 extraPaths = ["src"]
 venvPath = "."
 venv = ".venv"
