@@ -15,6 +15,9 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "fastapi==0.162.5",
+    "mypy==2.4.1",
+    "pyright==1.1.414",
     "pytest>=9.2.0",
     "ruff>=0.17.4",
     "ty>=0.0.99",
@@ -49,10 +52,12 @@ ignore = ["ANN401"]
 "test_*.py" = ["ANN"]
 
 [tool.ruff.format]
+# Preserve the upstream Linear specification verbatim.
+exclude = ["docs/api/source-spec.md"]
 docstring-code-format = true
 
 [tool.ty.environment]
-root = ["src"]
+root = ["src", "."]
 # Check a portable library without assuming the developer's operating system.
 python-platform = "all"
 # Infer the target Python version from project.requires-python.
@@ -63,3 +68,21 @@ unused-ignore-comment = "error"
 
 [tool.ty.terminal]
 error-on-warning = true
+
+[tool.mypy]
+python_version = "3.15"
+strict = true
+mypy_path = "src"
+explicit_package_bases = true
+warn_unreachable = true
+
+[tool.pyright]
+pythonVersion = "3.15"
+typeCheckingMode = "strict"
+extraPaths = ["src"]
+venvPath = "."
+venv = ".venv"
+include = ["src", "scripts", "tests", "examples"]
+
+[tool.ty.src]
+exclude = ["tests/typing/**/negative.py"]
