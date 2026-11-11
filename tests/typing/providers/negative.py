@@ -1,3 +1,4 @@
+# fmt: off
 from tests.typing.models import Repository, Service, make_service
 
 from pyinject import providers
@@ -9,3 +10,4 @@ providers.Factory(Service)  # E: mypy=call-arg pyright=reportCallIssue
 providers.Singleton(Repository, dsn=1)  # E: mypy=arg-type pyright=reportArgumentType
 providers.Factory(make_service, repo=repo.ref)  # E: mypy=call-arg pyright=reportCallIssue
 providers.Factory(make_service, repo.ref, True)  # E: mypy=call-arg pyright=reportCallIssue
+# fmt: on
