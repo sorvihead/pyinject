@@ -5,6 +5,8 @@ These are requirements for U9–U11, not passing tests or implemented guarantees
 ## U9
 
 - Declaration and Container() never construct application objects.
+- Reject target parameters and bindings named __pyinject_kwargs with InvalidGraphError
+  before construction; that private spelling is reserved by the approved API contract.
 - Factory creates fresh values; Singleton reuses a value within a root context,
   and isolates two root instances. Choose and test a concurrency contract before implementation.
 - Only direct DeclarativeContainer subclasses are allowed at runtime; @final is

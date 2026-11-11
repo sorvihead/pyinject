@@ -63,6 +63,8 @@ def main() -> None:
     files = sorted((ROOT / "tests/typing").rglob("*.py")) + sorted((ROOT / "examples").glob("*.py"))
     if not files:
         raise AssertionError("no typing fixtures found")
+    files += sorted((ROOT / "src").rglob("*.pyi"))
+    files += sorted((ROOT / "scripts").glob("*.py")) + sorted((ROOT / "tests").glob("test_*.py"))
     for checker in ("mypy", "pyright"):
         run(checker, files)
 

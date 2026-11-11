@@ -1,6 +1,14 @@
 # pyinject
 
-A Python dependency injection library, currently in early development.
+A typed dependency injection API, currently at the **public API v0 design** stage.
+
+U1–U8 provide `.pyi` declarations, checked examples and contracts. **DI runtime
+is not implemented**; resolver, caches and wiring belong to U9–U11. The examples
+are for static checking and cannot yet run as dependency-injection programs.
+
+Start with the [API reference](docs/api/reference.md),
+[requirements coverage](docs/api/traceability.md) and
+[FastAPI design evidence](docs/api/fastapi.md).
 
 ## Development
 
@@ -18,6 +26,8 @@ dependencies.
 Run the checks from the repository root:
 
 ```sh
+uv run --locked python scripts/check_typing.py
+uv run --locked python -m pytest -q
 uv run --locked ruff check .
 uv run --locked ruff format --check .
 uv run --locked ty check
@@ -38,7 +48,7 @@ uv run --locked ty check --watch
 
 ### Code conventions
 
-- Ruff formats code with an 88-character line length, sorts imports, checks for
+- Ruff formats code with an 120-character line length, sorts imports, checks for
   common bugs, and requires function annotations. Tests are exempt from the
   annotation rules. `Any` is allowed for dynamic dependency injection internals.
 - ty checks Python files throughout the project, including future tests and
