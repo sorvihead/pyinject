@@ -1,4 +1,9 @@
 """Declarative blueprints; concrete subclasses should explicitly use @final."""
 
+from collections.abc import Sequence
+from types import ModuleType
+
 class DeclarativeContainer:
     def __init__(self) -> None: ...
+    def wire(self, *, modules: Sequence[ModuleType]) -> None: ...
+    def unwire(self) -> None: ...
